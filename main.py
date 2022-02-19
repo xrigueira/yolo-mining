@@ -12,7 +12,7 @@ with open('coco.names', 'r') as f:
     classes = f.read().splitlines()
 
 # Load target image
-img = cv2.imread('image.jpg')
+img = cv2.imread('dog.jpg')
 
 height, width, _ = img.shape
 
@@ -51,7 +51,23 @@ for output in layerOutputs:
             confidences.append(float(confidence))
             class_ids.append(class_id)
 
-print(len(boxes)) # does not detect anything. Fix before proceeding
+
+# Get of redundant boxes
+indexes = cv2.dnn.NMSBoxes(boxes, confidences, 0.5, 0.4)
+
+# Display results
+font = cv2.FONT_HERSHEY_SIMPLEX
+colors = np.random.uniform(0, 255, size=(len(boxes), 3)) # assign random colors to all baxes (3 channels)
+
+for i in indexes.flatten():
+    
+    x, y, w, h = boxes[i]
+    label = str(classes[class_ids[i]])
+    confidence = str(round(confidences[i]))
+    color = colors[i]
+    
+    cv2.rectangle(img, (x, y), (x+w, y+h), color, 2)
+    cv2.putText(img, label + ' ' + confidence, (x, y+20), font, 1, (0, 0, 0), 2)
 
 # To only keep the maximum score box
 
