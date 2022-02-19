@@ -12,7 +12,7 @@ with open('coco.names', 'r') as f:
     classes = f.read().splitlines()
 
 # Load target image
-img = cv2.imread('dog.jpg')
+img = cv2.imread('image.jpg')
 
 height, width, _ = img.shape
 
@@ -67,7 +67,9 @@ for i in indexes.flatten():
     color = colors[i]
     
     cv2.rectangle(img, (x, y), (x+w, y+h), color, 2)
-    cv2.putText(img, label + ' ' + confidence, (x, y+20), font, 1, (0, 0, 0), 2)
+    (w_text, h_text), _ = cv2.getTextSize(label + ' ' + confidence, font, 0.8, 2)
+    cv2.rectangle(img, (x, y), (x+w_text, y-h_text-8), color, -1)
+    cv2.putText(img, label + ' ' + confidence, (x, y-5), font, 0.8, (255, 255, 255), 2)
 
 # To only keep the maximum score box
 
