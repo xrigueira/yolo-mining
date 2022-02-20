@@ -12,7 +12,7 @@ with open('coco.names', 'r') as f:
     classes = f.read().splitlines()
 
 # Load target image
-img = cv2.imread('image.jpg')
+img = cv2.imread('dog.jpg')
 
 height, width, _ = img.shape
 
@@ -54,6 +54,7 @@ for output in layerOutputs:
 
 # Get of redundant boxes
 indexes = cv2.dnn.NMSBoxes(boxes, confidences, 0.5, 0.4)
+indexes = np.array(indexes)
 
 # Display results
 font = cv2.FONT_HERSHEY_SIMPLEX
