@@ -1,6 +1,6 @@
-from turtle import width
 import cv2
 import numpy as np
+from turtle import width
 
 # Pass the weights and the configurations
 net = cv2.dnn.readNet('yolov3.weights', 'yolov3.cfg')
