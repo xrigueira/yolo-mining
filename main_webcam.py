@@ -17,6 +17,7 @@ cap = cv2.VideoCapture(0)
 while cap.isOpened():
 
     _, img = cap.read()
+    img = cv2.resize(img, None, fx=2.0, fy=2.0, interpolation=cv2.INTER_AREA)
     height, width, _ = img.shape
 
     # Rescale and normalize image
