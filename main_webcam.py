@@ -1,9 +1,13 @@
 import cv2
+import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 import numpy as np
 from turtle import width
 
 # Pass the weights and the configurations
 net = cv2.dnn.readNet('yolov3.weights', 'yolov3.cfg')
+# net.setPreferableBackend(cv2.dnn.DNN_BACKEND_CUDA)
+# net.setPreferableTarget(cv2.dnn.DNN_TARGET_CUDA)
 
 # Extract object names from the coco file
 classes = []
