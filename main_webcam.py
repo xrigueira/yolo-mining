@@ -1,13 +1,19 @@
-import cv2
 import os
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+import cv2
+import time
 import numpy as np
 from turtle import width
 
+# Start time variables
+start_time = time.time()
+display_time = 0
+fps = 0
+
 # Pass the weights and the configurations
 net = cv2.dnn.readNet('yolov3.weights', 'yolov3.cfg')
-# net.setPreferableBackend(cv2.dnn.DNN_BACKEND_CUDA)
-# net.setPreferableTarget(cv2.dnn.DNN_TARGET_CUDA)
+net.setPreferableBackend(cv2.dnn.DNN_BACKEND_CUDA)
+net.setPreferableTarget(cv2.dnn.DNN_TARGET_CUDA)
 
 # Extract object names from the coco file
 classes = []
@@ -16,7 +22,10 @@ with open('coco.names', 'r') as f:
     classes = f.read().splitlines()
 
 # Load target video
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+
+start_time = time.time()
+fps = 0
 
 while cap.isOpened():
 
@@ -71,7 +80,7 @@ while cap.isOpened():
     for i in indexes.flatten():
         x, y, w, h = boxes[i]
         label = str(classes[class_ids[i]])
-        confidence = str(round(confidences[i]))
+        confidence = str(round(confidences[i], 5))
         color = colors[i]
         
         cv2.rectangle(img, (x, y), (x+w, y+h), color, 2)
@@ -86,6 +95,13 @@ while cap.isOpened():
 
     if key==27:
         break
+
+    fps =+ 1
+    TIME = time.time() - start_time
+    if (TIME) >= display_time:
+        print("FPS: ", round(fps / TIME, 3))
+        fps = 0
+        start_time = time.time()
 
 cap.release()
 cv2.destroyAllWindows()
