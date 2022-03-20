@@ -22,6 +22,7 @@ with open('coco.names', 'r') as f:
     classes = f.read().splitlines()
 
 # Load target video
+# cap = cv2.VideoCapture('rtsp://admin:admin@47.61.166.232/video')
 cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 
 start_time = time.time()
@@ -80,7 +81,7 @@ while cap.isOpened():
     for i in indexes.flatten():
         x, y, w, h = boxes[i]
         label = str(classes[class_ids[i]])
-        confidence = str(round(confidences[i], 5))
+        confidence = str(round(confidences[i], 3))
         color = colors[i]
         
         cv2.rectangle(img, (x, y), (x+w, y+h), color, 2)
