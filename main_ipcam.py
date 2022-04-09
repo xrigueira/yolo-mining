@@ -1,9 +1,10 @@
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+# os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 import cv2
 import time
 import numpy as np
 from turtle import width
+from PIL import ImageGrab
 
 # Start time variables
 start_time = time.time()
@@ -12,8 +13,8 @@ fps = 0
 
 # Pass the weights and the configurations
 net = cv2.dnn.readNet('yolov3.weights', 'yolov3.cfg')
-net.setPreferableBackend(cv2.dnn.DNN_BACKEND_CUDA)
-net.setPreferableTarget(cv2.dnn.DNN_TARGET_CUDA)
+# net.setPreferableBackend(cv2.dnn.DNN_BACKEND_CUDA)
+# net.setPreferableTarget(cv2.dnn.DNN_TARGET_CUDA)
 
 # Extract object names from the coco file
 classes = []
@@ -23,15 +24,17 @@ with open('coco.names', 'r') as f:
 
 # Load target video
 # cap = cv2.VideoCapture('rtsp://admin:admin@47.61.166.232/video')
-cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+
 
 start_time = time.time()
 fps = 0
 
-while cap.isOpened():
+while True:
 
-    _, img = cap.read()
-    img = cv2.resize(img, None, fx=2.0, fy=2.0, interpolation=cv2.INTER_AREA)
+    frame = ImageGrab.grab(bbox=(0, 0, 1920, 1080))
+    img_np = np.array(frame)
+    img = cv2.cvtColor(img_np, cv2.COLOR_BGR2RGB)
+    # img = cv2.resize(img, None, fx=1.0, fy=1.0, interpolation=cv2.INTER_AREA)
     height, width, _ = img.shape
 
     # Rescale and normalize image
@@ -104,5 +107,5 @@ while cap.isOpened():
         fps = 0
         start_time = time.time()
 
-cap.release()
+# cap.release()
 cv2.destroyAllWindows()
