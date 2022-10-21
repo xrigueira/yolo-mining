@@ -6,6 +6,8 @@ import numpy as np
 from turtle import width
 from PIL import ImageGrab
 
+# Web to display the camera's feed https://support.spc.es/hc/es/articles/360009451418-Manual-para-la-visualizaci%C3%B3n-de-las-c%C3%A1maras-SPC-desde-la-Web
+
 # Start time variables
 start_time = time.time()
 display_time = 0
@@ -93,7 +95,6 @@ while True:
         cv2.putText(img, label + ' ' + confidence, (x, y-5), font, 0.8, (255, 255, 255), 2)
 
     # To only keep the maximum score box
-
     cv2.imshow('Image', img)
     key = cv2.waitKey(1)
 

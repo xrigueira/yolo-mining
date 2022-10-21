@@ -62,7 +62,7 @@ while cap.isOpened():
     # Display results
     font = cv2.FONT_HERSHEY_SIMPLEX
     colors = np.random.uniform(0, 255, size=(len(boxes), 3)) # assign random colors to all baxes (3 channels)
-   
+
     for i in indexes.flatten():
         x, y, w, h = boxes[i]
         label = str(classes[class_ids[i]])

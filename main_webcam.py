@@ -5,6 +5,7 @@ import time
 import numpy as np
 from turtle import width
 
+
 # Start time variables
 start_time = time.time()
 display_time = 0
@@ -31,7 +32,7 @@ fps = 0
 while cap.isOpened():
 
     _, img = cap.read()
-    img = cv2.resize(img, None, fx=2.0, fy=2.0, interpolation=cv2.INTER_AREA)
+    img = cv2.resize(img, None, fx=2.0, fy=1.5, interpolation=cv2.INTER_AREA)
     height, width, _ = img.shape
 
     # Rescale and normalize image
