@@ -69,9 +69,9 @@ while cap.isOpened():
                 boxes.append([x, y, w, h])
                 confidences.append(float(confidence))
                 class_ids.append(class_id)
+                
 
-
-    # Get ride of of redundant boxes
+    # Get ride of all redundant boxes
     indexes = cv2.dnn.NMSBoxes(boxes, confidences, 0.5, 0.4)
     indexes = np.array(indexes)
 
